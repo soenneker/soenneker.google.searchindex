@@ -41,7 +41,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
-        <PackageReference Include="Soenneker.Google.IndexingService" Version="2.1.610" />
+        <PackageReference Include="Soenneker.Google.IndexingService" Version="2.1.611" />
         <PackageReference Include="Soenneker.Utils.Method" Version="2.1.203" />
     </ItemGroup>
 </Project>

@@ -1,11 +1,14 @@
 using Soenneker.Google.SearchIndex.Abstract;
 using System.Threading.Tasks;
 using System;
+using System.Threading;
 using Google.Apis.Indexing.v3;
 using Google.Apis.Indexing.v3.Data;
 using Microsoft.Extensions.Logging;
 using Soenneker.Google.IndexingService.Abstract;
 using Soenneker.Utils.Method;
+using Soenneker.Extensions.ValueTask;
+using Soenneker.Extensions.Task;
 
 namespace Soenneker.Google.SearchIndex;
 
@@ -21,9 +24,9 @@ public class GoogleSearchIndexUtil : IGoogleSearchIndexUtil
         _logger = logger;
     }
 
-    public async ValueTask<PublishUrlNotificationResponse> AddUpdateIndex(string jobUrl, string action, string fileName)
+    public async ValueTask<PublishUrlNotificationResponse> AddUpdateIndex(string jobUrl, string action, string fileName, CancellationToken cancellationToken = default)
     {
-        global::Google.Apis.Indexing.v3.IndexingService service = await _googleIndexingServiceUtil.Get(fileName);
+        global::Google.Apis.Indexing.v3.IndexingService service = await _googleIndexingServiceUtil.Get(fileName, cancellationToken).NoSync();
 
         _logger.LogInformation("{method} for URI: {uri} ...", MethodUtil.Get(), jobUrl);
 
@@ -35,13 +38,13 @@ public class GoogleSearchIndexUtil : IGoogleSearchIndexUtil
 
         var publishRequest = new UrlNotificationsResource.PublishRequest(service, requestBody);
 
-        PublishUrlNotificationResponse? result = await publishRequest.ExecuteAsync();
+        PublishUrlNotificationResponse? result = await publishRequest.ExecuteAsync(cancellationToken).NoSync();
         return result;
     }
 
-    public async ValueTask<UrlNotificationMetadata?> GetIndexStatus(string jobUrl, string fileName)
+    public async ValueTask<UrlNotificationMetadata?> GetIndexStatus(string jobUrl, string fileName, CancellationToken cancellationToken = default)
     {
-        global::Google.Apis.Indexing.v3.IndexingService service = await _googleIndexingServiceUtil.Get(fileName);
+        global::Google.Apis.Indexing.v3.IndexingService service = await _googleIndexingServiceUtil.Get(fileName, cancellationToken).NoSync();
 
         _logger.LogInformation("{method} for URI: {uri} ...", MethodUtil.Get(), jobUrl);
 
@@ -52,7 +55,7 @@ public class GoogleSearchIndexUtil : IGoogleSearchIndexUtil
 
         try
         {
-            UrlNotificationMetadata? result = await metaDataRequest.ExecuteAsync();
+            UrlNotificationMetadata? result = await metaDataRequest.ExecuteAsync(cancellationToken).NoSync();
             return result;
         }
         catch (Exception e)

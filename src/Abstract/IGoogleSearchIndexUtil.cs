@@ -1,4 +1,5 @@
 using Google.Apis.Indexing.v3.Data;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Soenneker.Google.SearchIndex.Abstract;
@@ -8,7 +9,7 @@ namespace Soenneker.Google.SearchIndex.Abstract;
 /// </summary>
 public interface IGoogleSearchIndexUtil
 {
-    ValueTask<PublishUrlNotificationResponse> AddUpdateIndex(string jobUrl, string action, string fileName);
+    ValueTask<PublishUrlNotificationResponse> AddUpdateIndex(string jobUrl, string action, string fileName, CancellationToken cancellationToken = default);
 
-    ValueTask<UrlNotificationMetadata?> GetIndexStatus(string jobUrl, string fileName);
+    ValueTask<UrlNotificationMetadata?> GetIndexStatus(string jobUrl, string fileName, CancellationToken cancellationToken = default);
 }

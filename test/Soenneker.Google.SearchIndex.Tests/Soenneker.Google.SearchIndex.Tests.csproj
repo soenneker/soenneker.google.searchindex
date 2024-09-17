@@ -31,7 +31,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\src\Soenneker.Google.SearchIndex.csproj" />
+        <ProjectReference Include="..\..\src\Soenneker.Google.SearchIndex.csproj" />
     </ItemGroup>
 
 </Project>

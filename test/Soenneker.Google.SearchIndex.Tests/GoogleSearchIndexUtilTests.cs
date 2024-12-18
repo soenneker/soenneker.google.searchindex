@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Soenneker.Google.SearchIndex.Abstract;
 using Soenneker.Tests.FixturedUnit;
 using Xunit;
-using Xunit.Abstractions;
+
 
 namespace Soenneker.Google.SearchIndex.Tests;
 

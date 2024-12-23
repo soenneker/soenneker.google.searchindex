@@ -1,9 +1,6 @@
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Soenneker.Google.SearchIndex.Abstract;
 using Soenneker.Tests.FixturedUnit;
 using Xunit;
-
 
 namespace Soenneker.Google.SearchIndex.Tests;
 
@@ -15,5 +12,11 @@ public class GoogleSearchIndexUtilTests : FixturedUnitTest
     public GoogleSearchIndexUtilTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
     {
         _util = Resolve<IGoogleSearchIndexUtil>(true);
+    }
+
+    [Fact]
+    public void Default()
+    {
+
     }
 }

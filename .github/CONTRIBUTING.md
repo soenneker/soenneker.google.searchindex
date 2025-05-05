@@ -1,4 +1,4 @@
-# Contributing to Soenneker.Google.SearchIndex
+﻿# Contributing to Soenneker.Google.SearchIndex
 
 We're excited that you're interested in contributing!
 

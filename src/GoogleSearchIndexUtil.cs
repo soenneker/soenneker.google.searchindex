@@ -13,7 +13,7 @@ using Soenneker.Extensions.Task;
 namespace Soenneker.Google.SearchIndex;
 
 /// <inheritdoc cref="IGoogleSearchIndexUtil"/>
-public class GoogleSearchIndexUtil : IGoogleSearchIndexUtil
+public sealed class GoogleSearchIndexUtil : IGoogleSearchIndexUtil
 {
     private readonly IGoogleIndexingServiceUtil _googleIndexingServiceUtil;
     private readonly ILogger<GoogleSearchIndexUtil> _logger;
@@ -38,8 +38,7 @@ public class GoogleSearchIndexUtil : IGoogleSearchIndexUtil
 
         var publishRequest = new UrlNotificationsResource.PublishRequest(service, requestBody);
 
-        PublishUrlNotificationResponse? result = await publishRequest.ExecuteAsync(cancellationToken).NoSync();
-        return result;
+        return await publishRequest.ExecuteAsync(cancellationToken).NoSync();
     }
 
     public async ValueTask<UrlNotificationMetadata?> GetIndexStatus(string jobUrl, string fileName, CancellationToken cancellationToken = default)

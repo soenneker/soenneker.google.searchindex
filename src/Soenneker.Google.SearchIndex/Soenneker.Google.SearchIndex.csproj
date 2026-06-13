@@ -42,7 +42,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.Google.IndexingService" Version="4.0.2272" />
+        <PackageReference Include="Soenneker.Google.IndexingService" Version="4.0.2274" />
         <PackageReference Include="Soenneker.Utils.Method" Version="4.0.453" />
     </ItemGroup>
 </Project>

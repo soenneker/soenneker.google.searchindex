@@ -12,19 +12,19 @@ public interface IGoogleSearchIndexUtil
     /// <summary>
     /// Adds update index.
     /// </summary>
-    /// <param name="jobUrl">The job url.</param>
-    /// <param name="action">The action.</param>
-    /// <param name="fileName">The file name.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A task containing the result of the operation.</returns>
+    /// <param name="jobUrl">URL of the job to target.</param>
+    /// <param name="action">action to invoke when the operation runs.</param>
+    /// <param name="fileName">Name of the target file.</param>
+    /// <param name="cancellationToken">Token used to cancel the operation.</param>
+    /// <returns>A task whose result is the requested publish URL Notification Response.</returns>
     ValueTask<PublishUrlNotificationResponse> AddUpdateIndex(string jobUrl, string action, string fileName, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets index status.
     /// </summary>
-    /// <param name="jobUrl">The job url.</param>
-    /// <param name="fileName">The file name.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A task containing the result of the operation.</returns>
+    /// <param name="jobUrl">URL of the job to target.</param>
+    /// <param name="fileName">Name of the target file.</param>
+    /// <param name="cancellationToken">Token used to cancel the operation.</param>
+    /// <returns>A task whose result is the requested URL Notification Metadata.</returns>
     ValueTask<UrlNotificationMetadata?> GetIndexStatus(string jobUrl, string fileName, CancellationToken cancellationToken = default);
 }

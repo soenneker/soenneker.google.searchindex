@@ -13,6 +13,8 @@ public static class GoogleSearchIndexUtilRegistrar
     /// <summary>
     /// Adds <see cref="IGoogleSearchIndexUtil"/> as a singleton service. <para/>
     /// </summary>
+    /// <param name="services">Service collection that receives the registration.</param>
+    /// <returns>The same service collection, so additional registrations can be chained.</returns>
     public static IServiceCollection AddGoogleSearchIndexUtilAsSingleton(this IServiceCollection services)
     {
         services.AddGoogleIndexingServiceUtilAsSingleton();
@@ -23,6 +25,8 @@ public static class GoogleSearchIndexUtilRegistrar
     /// <summary>
     /// Adds <see cref="IGoogleSearchIndexUtil"/> as a scoped service. <para/>
     /// </summary>
+    /// <param name="services">Service collection that receives the registration.</param>
+    /// <returns>The same service collection, so additional registrations can be chained.</returns>
     public static IServiceCollection AddGoogleSearchIndexUtilAsScoped(this IServiceCollection services)
     {
         services.AddGoogleIndexingServiceUtilAsScoped();

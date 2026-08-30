@@ -6,7 +6,7 @@ using Soenneker.Google.SearchIndex.Abstract;
 namespace Soenneker.Google.SearchIndex.Registrars;
 
 /// <summary>
-/// A utility library for Google Search index related operations
+/// Registers scoped or singleton URL-notification operations over a shared indexing client provider.
 /// </summary>
 public static class GoogleSearchIndexUtilRegistrar
 {
@@ -29,7 +29,7 @@ public static class GoogleSearchIndexUtilRegistrar
     /// <returns>The same service collection, so additional registrations can be chained.</returns>
     public static IServiceCollection AddGoogleSearchIndexUtilAsScoped(this IServiceCollection services)
     {
-        services.AddGoogleIndexingServiceUtilAsScoped();
+        services.AddGoogleIndexingServiceUtilAsSingleton();
         services.TryAddScoped<IGoogleSearchIndexUtil, GoogleSearchIndexUtil>();
         return services;
     }

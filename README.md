@@ -5,7 +5,7 @@
 
 # Soenneker.Google.SearchIndex
 
-A utility library for Google Search index related operations.
+Scoped URL-notification operations over a shared Google Indexing API client provider.
 
 ## Install
 
@@ -13,26 +13,50 @@ A utility library for Google Search index related operations.
 dotnet add package Soenneker.Google.SearchIndex
 ```
 
-## Quick start
+## Credential file
+
+Place a Google service-account JSON file beneath `LocalResources` in the application output. The service account must be authorized for the target site.
+
+```xml
+<Content Include="LocalResources\google-indexing.json"
+         CopyToOutputDirectory="PreserveNewest" />
+```
+
+## Register
 
 ```csharp
 using Soenneker.Google.SearchIndex.Registrars;
 using Microsoft.Extensions.DependencyInjection;
 
-var services = new ServiceCollection();
-var result = services.AddGoogleSearchIndexUtilAsSingleton();
+services.AddGoogleSearchIndexUtilAsScoped();
 ```
 
-Adds `IGoogleSearchIndexUtil` as a singleton service.
+This intentionally registers `IGoogleSearchIndexUtil` as scoped and `IGoogleIndexingServiceUtil` as singleton. Disposing a scope destroys the short-lived utility while the cached authenticated client remains available to later scopes.
 
-## What you get
+`AddGoogleSearchIndexUtilAsSingleton()` is also available when the operation wrapper itself should be application-wide.
 
-- `IGoogleSearchIndexUtil` — A utility library for Google Search index related operations.
-- `GoogleSearchIndexUtilRegistrar` — A utility library for Google Search index related operations.
+## Publish and inspect a notification
+
+```csharp
+PublishUrlNotificationResponse response = await searchIndex.AddUpdateIndex(
+    "https://example.com/jobs/software-engineer",
+    "URL_UPDATED",
+    "google-indexing.json",
+    cancellationToken);
+
+UrlNotificationMetadata? metadata = await searchIndex.GetIndexStatus(
+    "https://example.com/jobs/software-engineer",
+    "google-indexing.json",
+    cancellationToken);
+```
+
+`GetIndexStatus()` returns notification metadata, not a general Google Search crawl or ranking status. This package does not decide whether a URL is eligible for the Indexing API.
 
 ## API at a glance
 
 | API | What it does | Result / important behavior |
 | --- | --- | --- |
-| `GoogleSearchIndexUtilRegistrar.AddGoogleSearchIndexUtilAsSingleton(services)` | Adds `IGoogleSearchIndexUtil` as a singleton service. | The same service collection, so additional registrations can be chained. |
-| `GoogleSearchIndexUtilRegistrar.AddGoogleSearchIndexUtilAsScoped(services)` | Adds `IGoogleSearchIndexUtil` as a scoped service. | The same service collection, so additional registrations can be chained. |
+| `AddUpdateIndex(jobUrl, action, fileName)` | Publishes a URL notification using the named service account. | Returns Google's publish response. |
+| `GetIndexStatus(jobUrl, fileName)` | Retrieves the latest notification metadata for a URL. | Returns `null` only when Google responds that no metadata was found. |
+
+Authentication, authorization, quota, transport, and other API failures propagate to the caller. Cancellation is not converted into a missing-status result.

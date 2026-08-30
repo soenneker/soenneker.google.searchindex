@@ -1,7 +1,8 @@
 using Soenneker.Google.SearchIndex.Abstract;
 using System.Threading.Tasks;
-using System;
+using System.Net;
 using System.Threading;
+using Google;
 using Google.Apis.Indexing.v3;
 using Google.Apis.Indexing.v3.Data;
 using Microsoft.Extensions.Logging;
@@ -12,7 +13,6 @@ using Soenneker.Extensions.Task;
 
 namespace Soenneker.Google.SearchIndex;
 
-/// <inheritdoc cref="IGoogleSearchIndexUtil"/>
 public sealed class GoogleSearchIndexUtil : IGoogleSearchIndexUtil
 {
     private readonly IGoogleIndexingServiceUtil _googleIndexingServiceUtil;
@@ -57,9 +57,9 @@ public sealed class GoogleSearchIndexUtil : IGoogleSearchIndexUtil
             UrlNotificationMetadata? result = await metaDataRequest.ExecuteAsync(cancellationToken).NoSync();
             return result;
         }
-        catch (Exception e)
+        catch (GoogleApiException e) when (e.HttpStatusCode == HttpStatusCode.NotFound)
         {
-            _logger.LogError(e, "Error retrieving metadata status, we will assume negative index");
+            _logger.LogDebug(e, "No indexing notification metadata exists for {Uri}", jobUrl);
             return null;
         }
     }

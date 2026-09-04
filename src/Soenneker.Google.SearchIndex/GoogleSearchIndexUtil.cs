@@ -13,6 +13,7 @@ using Soenneker.Extensions.Task;
 
 namespace Soenneker.Google.SearchIndex;
 
+/// <inheritdoc cref="IGoogleSearchIndexUtil" />
 public sealed class GoogleSearchIndexUtil : IGoogleSearchIndexUtil
 {
     private readonly IGoogleIndexingServiceUtil _googleIndexingServiceUtil;

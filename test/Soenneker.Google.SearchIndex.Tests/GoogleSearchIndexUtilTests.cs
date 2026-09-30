@@ -25,7 +25,7 @@ public class GoogleSearchIndexUtilTests : HostedUnitTest
     }
 
     [Test]
-    public async Task Scoped_registration_keeps_indexing_client_provider_singleton()
+    public async ValueTask Scoped_registration_keeps_indexing_client_provider_singleton()
     {
         var services = new ServiceCollection();
 

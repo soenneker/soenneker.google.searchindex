@@ -5,6 +5,7 @@ using Soenneker.Google.IndexingService.Abstract;
 using Soenneker.Google.SearchIndex.Abstract;
 using Soenneker.Google.SearchIndex.Registrars;
 using Soenneker.Tests.HostedUnit;
+using System.Threading;
 
 namespace Soenneker.Google.SearchIndex.Tests;
 
@@ -25,7 +26,7 @@ public class GoogleSearchIndexUtilTests : HostedUnitTest
     }
 
     [Test]
-    public async ValueTask Scoped_registration_keeps_indexing_client_provider_singleton()
+    public async ValueTask Scoped_registration_keeps_indexing_client_provider_singleton(CancellationToken cancellationToken)
     {
         var services = new ServiceCollection();
 

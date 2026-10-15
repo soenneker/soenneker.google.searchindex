@@ -44,6 +44,6 @@
 
     <ItemGroup>
         <PackageReference Include="Soenneker.Google.IndexingService" Version="4.0.2411" />
-        <PackageReference Include="Soenneker.Utils.Method" Version="4.0.472" />
+        <PackageReference Include="Soenneker.Utils.Method" Version="4.0.473" />
     </ItemGroup>
 </Project>
